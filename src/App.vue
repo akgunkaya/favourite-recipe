@@ -1,15 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app-container">
+    <SideBar :dataCategory="dataCategory" :dataArea="dataArea" :dataTags="dataTags" />
+    <MainView :data="data"/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios"
+import MainView from './components/MainView.vue'
+import SideBar from './components/SideBar.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MainView,
+    SideBar,    
+  },
+  data () {
+    return {
+      data:[],
+      dataCategory:[],
+      dataArea:[],
+      dataTags:[],
+    }
+  },
+
+  async mounted() {
+    let result = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=Soup");
+    this.data = result.data.meals
+    console.log(this.data)
+    for (let i=0; i<this.data.length; i++) {
+      if(this.dataCategory.indexOf(this.data[i].strCategory) === -1){
+        this.dataCategory.push(this.data[i].strCategory)
+      }  
+      if(this.dataArea.indexOf(this.data[i].strArea) === -1){
+        this.dataArea.push(this.data[i].strArea)
+      }    
+      if(this.dataTags.indexOf(this.data[i].strTags) === -1){
+        this.dataTags.push(this.data[i].strTags)
+      }                        
+    } 
   }
 }
 </script>
@@ -22,5 +53,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.app-container {
+  display:flex;
 }
 </style>
