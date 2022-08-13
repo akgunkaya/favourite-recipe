@@ -1,29 +1,75 @@
 <template>
   <div class="main-view-container">
     <template v-for="item in data" :key="item.idMeal">
-      <div class="recipe-thumb-container">
-        <img v-bind:src="item.strMealThumb" alt="">
-        <p>{{item.strMeal}}</p>
-      </div>
+      <template v-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags)">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>  
+      <template v-else-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && !store.filteredTags.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>  
+      <template v-else-if="store.filteredCategories.includes(item.strCategory) && matchSubstring(item.strTags) && !store.filteredAreas.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>    
+      <template v-else-if="store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags) && !store.filteredCategories.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>                       
+      <template v-else-if="store.filteredCategories.includes(item.strCategory) && !store.filteredAreas.length && !store.filteredTags.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>      
+      <template v-else-if="store.filteredAreas.includes(item.strArea) && !store.filteredCategories.length && !store.filteredTags.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>   
+      <template v-else-if="matchSubstring(item.strTags) && !store.filteredCategories.length && !store.filteredAreas.length">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>               
+      <template v-else-if="!store.filteredCategories.length && !store.filteredAreas.length && !store.filteredTags.length ">
+        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+      </template>              
     </template>  
   </div>      
 </template>
 
 <script>
 import { store } from './store.js'
+import ThumbNail from './child-components/ThumbNail.vue'
 
 export default {
   name: 'MainView',
   props: {
     data: Array,
   },
+   components: {
+    ThumbNail
+  },
   data() {
     return {
       store
     }
-  }  
+  },
+    methods: {   
+      matchSubstring: function (item) {
+        if (item !== null) {
+          const array = store.filteredTags;
+          const itemArray = item.split(',')
+          
+          for (let i=0; i<itemArray.length; i++) {          
+            const substring = itemArray[i];
+  
+            const match = array.find(element => {
+              if (element.includes(substring)) {
+                return true;
+              }
+            });
+  
+            if (match !== undefined) {
+              return true
+            }               
+          }
+        }
+      },
+    }   
 }
-console.log(store.count)
+
 
 </script>
 
@@ -46,11 +92,6 @@ a {
 .main-view-container {
   display: flex; 
   flex-wrap: wrap;
-}
-.recipe-thumb-container {
-  width:33%;
-}
-.recipe-thumb-container img {
-  width:100%;
+  width:80%;
 }
 </style>

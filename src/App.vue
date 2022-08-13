@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <SideBar :dataCategory="dataCategory" :dataArea="dataArea" :dataTags="dataTags" />
+    <SideNav :dataCategory="dataCategory" :dataArea="dataArea" :dataTags="dataTags" />
     <MainView :data="data"/>
   </div>
 </template>
@@ -8,14 +8,15 @@
 <script>
 import axios from "axios"
 import MainView from './components/MainView.vue'
-import SideBar from './components/SideBar.vue'
+import SideNav from './components/SideNav.vue'
 
 
 export default {
+
   name: 'App',
   components: {
     MainView,
-    SideBar,    
+    SideNav,    
   },
   data () {
     return {
@@ -31,21 +32,29 @@ export default {
     this.data = result.data.meals
     console.log(this.data)
     for (let i=0; i<this.data.length; i++) {
-      if(this.dataCategory.indexOf(this.data[i].strCategory) === -1){
+      if(this.dataCategory.indexOf(this.data[i].strCategory) === -1 && this.data[i].strCategory !== null){
         this.dataCategory.push(this.data[i].strCategory)
       }  
-      if(this.dataArea.indexOf(this.data[i].strArea) === -1){
+      if(this.dataArea.indexOf(this.data[i].strArea) === -1 && this.data[i].strArea !== null){
         this.dataArea.push(this.data[i].strArea)
       }    
-      if(this.dataTags.indexOf(this.data[i].strTags) === -1){
-        this.dataTags.push(this.data[i].strTags)
-      }                        
+      if (this.data[i].strTags !== null) {
+        let splitCommaArray = this.data[i].strTags.split(',')
+        for (let j=0; j<splitCommaArray.length; j++) {
+          if(this.dataTags.indexOf(splitCommaArray[j].trim()) === -1){
+            this.dataTags.push(splitCommaArray[j].trim())
+          }   
+        }  
+      }                   
     } 
   }
 }
 </script>
 
 <style>
+body {
+  margin:0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
