@@ -3,7 +3,7 @@
     <input @change="resetFilters" v-model="store.searchTerm" placeholder="Search" />
     <h3>Favourites *Todo complete styling*</h3>
       <template v-for="item in store.favouriteRecipe" :key="item.idMeal">       
-        <div class="recipe-thumb-container" >
+        <div class="recipe-thumb-container" @click="searchFavourite(item.strMeal)" >
           <div class="image-wrapper">
             <img class="thumbnail" v-bind:src="item.strMealThumb" alt="">
             <span>{{item.strMeal}}</span>
@@ -31,6 +31,9 @@ import { store } from './store.js'
         store.activeCategories = []
         store.activeAreas = []
         store.activeTags = []          
+      }, 
+      searchFavourite: function (itemTitle) {
+        store.searchTerm = itemTitle
       }, 
     }   
   }

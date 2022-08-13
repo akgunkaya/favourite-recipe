@@ -77,7 +77,8 @@ export default {
   right: 20px;
   background-image:url('~@/assets/favourite-512.png');
   background-size: cover;
-  background-repeat: no-repeat;  
+  background-repeat: no-repeat;
+  cursor: pointer;  
 }
 .recipe-thumb-container .favourite-icon.active {
     background-image:url('~@/assets/favourite-512-filled.png');

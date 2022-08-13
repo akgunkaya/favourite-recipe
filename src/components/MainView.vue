@@ -3,7 +3,7 @@
     <template v-for="item in data" :key="item.idMeal">    
       <template v-if="store.searchTerm">
         <template v-if="item.strMeal.toLowerCase().includes(store.searchTerm.toLowerCase())">
-          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+          <ThumbNail :item="item" />
         </template>  
       </template>  
       <template v-else>
