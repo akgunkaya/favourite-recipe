@@ -1,4 +1,5 @@
 <template>
+  <TopNav />
   <div class="app-container">
     <SideNav :dataCategory="dataCategory" :dataArea="dataArea" :dataTags="dataTags" />
     <MainView :data="data"/>
@@ -9,6 +10,8 @@
 import axios from "axios"
 import MainView from './components/MainView.vue'
 import SideNav from './components/SideNav.vue'
+import TopNav from './components/TopNav.vue'
+
 
 
 export default {
@@ -16,8 +19,9 @@ export default {
   name: 'App',
   components: {
     MainView,
-    SideNav,    
-  },
+    SideNav,
+    TopNav,
+},
   data () {
     return {
       data:[],

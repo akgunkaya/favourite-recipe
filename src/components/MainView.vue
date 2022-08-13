@@ -1,30 +1,37 @@
 <template>
   <div class="main-view-container">
-    <template v-for="item in data" :key="item.idMeal">
-      <template v-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags)">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+    <template v-for="item in data" :key="item.idMeal">    
+      <template v-if="store.searchTerm">
+        <template v-if="item.strMeal.toLowerCase().includes(store.searchTerm.toLowerCase())">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>  
       </template>  
-      <template v-else-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && !store.filteredTags.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>  
-      <template v-else-if="store.filteredCategories.includes(item.strCategory) && matchSubstring(item.strTags) && !store.filteredAreas.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>    
-      <template v-else-if="store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags) && !store.filteredCategories.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>                       
-      <template v-else-if="store.filteredCategories.includes(item.strCategory) && !store.filteredAreas.length && !store.filteredTags.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>      
-      <template v-else-if="store.filteredAreas.includes(item.strArea) && !store.filteredCategories.length && !store.filteredTags.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>   
-      <template v-else-if="matchSubstring(item.strTags) && !store.filteredCategories.length && !store.filteredAreas.length">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>               
-      <template v-else-if="!store.filteredCategories.length && !store.filteredAreas.length && !store.filteredTags.length ">
-        <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
-      </template>              
+      <template v-else>
+        <template v-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags)">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>  
+        <template v-else-if="store.filteredCategories.includes(item.strCategory) && store.filteredAreas.includes(item.strArea) && !store.filteredTags.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>  
+        <template v-else-if="store.filteredCategories.includes(item.strCategory) && matchSubstring(item.strTags) && !store.filteredAreas.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>    
+        <template v-else-if="store.filteredAreas.includes(item.strArea) && matchSubstring(item.strTags) && !store.filteredCategories.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>                       
+        <template v-else-if="store.filteredCategories.includes(item.strCategory) && !store.filteredAreas.length && !store.filteredTags.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>      
+        <template v-else-if="store.filteredAreas.includes(item.strArea) && !store.filteredCategories.length && !store.filteredTags.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>   
+        <template v-else-if="matchSubstring(item.strTags) && !store.filteredCategories.length && !store.filteredAreas.length">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template>               
+        <template v-else-if="!store.filteredCategories.length && !store.filteredAreas.length && !store.filteredTags.length ">
+          <ThumbNail :strMealThumb="item.strMealThumb" :strMeal="item.strMeal" :strCategory="item.strCategory" :strArea="item.strArea" :strTag="item.strTags" />
+        </template> 
+      </template>        
     </template>  
   </div>      
 </template>
@@ -51,7 +58,7 @@ export default {
         if (item !== null) {
           const array = store.filteredTags;
           const itemArray = item.split(',')
-          
+
           for (let i=0; i<itemArray.length; i++) {          
             const substring = itemArray[i];
   

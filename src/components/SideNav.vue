@@ -2,19 +2,19 @@
   <nav class="sidenav">
       <h1>Category</h1>
     <div class="tags-container">
-      <div class="tag-chip" v-for="(item,i) in dataCategory" :key="i" @click="filterCategories(item, i)" :class="{ active: activeCategories.includes(i)}">
+      <div class="tag-chip" v-for="(item,i) in dataCategory" :key="i" @click="filterCategories(item, i)" :class="{ active: store.activeCategories.includes(i)}">
         {{item}}
       </div>        
     </div>
     <h1>Area</h1>
     <div class="tags-container">
-      <div class="tag-chip" v-for="(item,i) in dataArea" :key="i" @click="filterAreas(item, i)" :class="{ active: activeAreas.includes(i)}">
+      <div class="tag-chip" v-for="(item,i) in dataArea" :key="i" @click="filterAreas(item, i)" :class="{ active: store.activeAreas.includes(i)}">
         {{item}}
       </div>               
     </div>
     <h1>Tags</h1>
     <div class="tags-container">
-      <div class="tag-chip" v-for="(item,i) in dataTags" :key="i" @click="filterTags(item, i)" :class="{ active: activeTags.includes(i)}">
+      <div class="tag-chip" v-for="(item,i) in dataTags" :key="i" @click="filterTags(item, i)" :class="{ active: store.activeTags.includes(i)}">
         {{item}}
       </div>          
     </div>                    
@@ -32,10 +32,7 @@ import { store } from './store.js'
       dataTags: Array
     },  
     data() {
-      return {
-        activeCategories: [],
-        activeAreas: [],
-        activeTags: [],        
+      return {      
         store
       }
     },
@@ -43,33 +40,33 @@ import { store } from './store.js'
       filterCategories: function (item, i) {
         if(store.filteredCategories.indexOf(item) === -1){
           store.filteredCategories.push(item)
-          this.activeCategories.push(i);
+          store.activeCategories.push(i);
         }else {
           if (store.filteredCategories.indexOf(item) > -1) { 
             store.filteredCategories.splice(store.filteredCategories.indexOf(item), 1);
-            this.activeCategories.splice(this.activeCategories.indexOf(i), 1);
+            store.activeCategories.splice(store.activeCategories.indexOf(i), 1);
           } 
         }
       },
       filterAreas: function (item, i) {
         if(store.filteredAreas.indexOf(item) === -1){
           store.filteredAreas.push(item)
-          this.activeAreas.push(i);        
+          store.activeAreas.push(i);        
         }else {
           if (store.filteredAreas.indexOf(item) > -1) { 
             store.filteredAreas.splice(store.filteredAreas.indexOf(item), 1);
-            this.activeAreas.splice(this.activeAreas.indexOf(i), 1);
+            store.activeAreas.splice(store.activeAreas.indexOf(i), 1);
           } 
         }
       },   
       filterTags: function (item, i) {
         if(store.filteredTags.indexOf(item) === -1){
           store.filteredTags.push(item)
-          this.activeTags.push(i);        
+          store.activeTags.push(i);        
         }else {
           if (store.filteredTags.indexOf(item) > -1) { 
             store.filteredTags.splice(store.filteredTags.indexOf(item), 1);
-            this.activeTags.splice(this.activeTags.indexOf(i), 1);
+            store.activeTags.splice(store.activeTags.indexOf(i), 1);
           } 
         }
       }
