@@ -7,5 +7,6 @@ export const store = reactive({
   activeCategories: [],
   activeAreas: [],
   activeTags: [],
+  favouriteRecipe: [],
   searchTerm: "",
 });
