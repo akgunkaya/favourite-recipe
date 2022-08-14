@@ -35,9 +35,7 @@ export default {
   async mounted() {
     let result = await axios.get("https://www.themealdb.com/api/json/v1/1/search.php?s=Soup");
     this.data = result.data.meals
-    console.log(this.data)
     let obj = JSON.parse(localStorage.getItem('key'));
-    console.log(obj)
     if (obj !== null) {
       for (let i = 0; i<obj.length; i++) {
         store.favouriteRecipe.push(obj[i])

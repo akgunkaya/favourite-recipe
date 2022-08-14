@@ -99,6 +99,6 @@ a {
 .main-view-container {
   display: flex; 
   flex-wrap: wrap;
-  width:80%;
+  width:100%;
 }
 </style>

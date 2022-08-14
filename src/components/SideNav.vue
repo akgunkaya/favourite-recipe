@@ -77,7 +77,7 @@ import { store } from './store.js'
 
 <style scoped>
   .sidenav {
-      width:20%;
+      width:500px;
       background-color: #f5f5f5;
   }
   .tags-container {
@@ -98,6 +98,7 @@ import { store } from './store.js'
     transition: all 0.2s ease-in-out;
     border:2px solid white;
     backface-visibility: hidden;
+    user-select: none;
   }
   .tag-chip:hover {
     box-shadow: 2px 2px 2px #aaaaaa; 

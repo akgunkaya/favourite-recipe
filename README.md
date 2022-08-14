@@ -1,4 +1,4 @@
-# hello-world
+# favourite-recipe
 
 ## Project setup
 ```
